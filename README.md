@@ -7,7 +7,7 @@
 This repository contains **two Finite State Machine (FSM)–based traffic light controller designs** implemented in **Verilog HDL**, targeting real-world traffic scenarios:
 
 - **Highway–Country Road Traffic Light Controller**
-- - **Urban Intersection Traffic Light Controller**
+- **Urban Intersection Traffic Light Controller**
 
 Both designs are **fully synthesizable**, clock-driven, and verified using **Icarus Verilog** and **GTKWave**.  
 The projects emphasize **practical traffic behavior modeling**, safety, and adaptability, making them suitable for **Intelligent Transportation Systems (ITS)** and digital design coursework.
@@ -132,18 +132,14 @@ It extends a basic traffic FSM by incorporating **pedestrian safety, emergency v
   - Immediate signal preemption
   - Forces GREEN signal for emergency clearance
 
-- **Adaptive Green Timing**
-  - Shorter green duration during low traffic
-  - Normal duration during peak traffic
-
-- **Early-Morning Flashing Yellow Mode**
-  - Blinking yellow operation during low-traffic hours
-  - Models real-world early-morning signal behavior
-
 - **Parking Slot Management**
   - Tracks available parking slots
   - Updates slot count on vehicle entry/exit
 
+- **Adaptive Green Timing**
+  - Shorter green duration during low traffic
+  - Normal duration during peak traffic
+    
 ---
 
 ## FSM States
@@ -193,11 +189,3 @@ gtkwave trafficv4.vcd
 - Synchronous timing and state transitions
 - Testbench-driven verification
 - Real-world ITS behavior representation
-
----
-
-## License
-
-This project is intended for **academic, learning, and demonstration purposes**.
-
-
