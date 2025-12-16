@@ -6,8 +6,8 @@
 
 This repository contains **two Finite State Machine (FSM)–based traffic light controller designs** implemented in **Verilog HDL**, targeting real-world traffic scenarios:
 
-- **Urban Intersection Traffic Light Controller**
 - **Highway–Country Road Traffic Light Controller**
+- - **Urban Intersection Traffic Light Controller**
 
 Both designs are **fully synthesizable**, clock-driven, and verified using **Icarus Verilog** and **GTKWave**.  
 The projects emphasize **practical traffic behavior modeling**, safety, and adaptability, making them suitable for **Intelligent Transportation Systems (ITS)** and digital design coursework.
@@ -20,85 +20,6 @@ The projects emphasize **practical traffic behavior modeling**, safety, and adap
 - **Simulation:** Icarus Verilog (`iverilog`, `vvp`)  
 - **Waveform Visualization:** GTKWave  
 - **Design Methodology:** FSM-based synchronous design  
-
----
-
-# Urban Traffic Light Controller
-
----
-
-## Description
-
-The **Urban Traffic Light Controller** models a smart city intersection with adaptive behavior.  
-It extends a basic traffic FSM by incorporating **pedestrian safety, emergency vehicle priority, adaptive green timing, parking slot management, and early-morning flashing modes**.
-
----
-
-## Key Features
-
-- **Vehicle Traffic Handling**
-  - Standard GREEN → YELLOW → RED sequencing
-  - Vehicle presence detection
-
-- **Pedestrian Crossing Phase**
-  - Dedicated pedestrian FSM state
-  - All vehicle traffic halted during crossing
-
-- **Emergency Vehicle Override**
-  - Immediate signal preemption
-  - Forces GREEN signal for emergency clearance
-
-- **Adaptive Green Timing**
-  - Shorter green duration during low traffic
-  - Normal duration during peak traffic
-
-- **Early-Morning Flashing Yellow Mode**
-  - Blinking yellow operation during low-traffic hours
-  - Models real-world early-morning signal behavior
-
-- **Parking Slot Management**
-  - Tracks available parking slots
-  - Updates slot count on vehicle entry/exit
-
----
-
-## FSM States
-
-- `IDLE`
-- `GREEN`
-- `YELLOW`
-- `RED`
-- `PEDESTRIAN`
-- `EMERGENCY`
-- `YELLOW_BLINK`
-
----
-
-## Simulation & Verification
-
-The design is verified using:
-
-- **Icarus Verilog** for compilation and simulation  
-- **GTKWave** for waveform visualization  
-
-Waveforms clearly show:
-
-- Clock-driven state transitions  
-- Proper traffic light sequencing  
-- Pedestrian and emergency overrides  
-- Adaptive timing behavior  
-
-<img width="1920" height="1080" alt="urban traffic waveform" src="https://github.com/user-attachments/assets/1b5276d1-870e-49ee-b5e5-3f6f59f4878b" />
-
----
-
-## How to Run (Urban Controller)
-
-```sh
-iverilog -o trafficv4.out trafficv4.v tb_trafficv4.v
-vvp trafficv4.out
-gtkwave trafficv4.vcd
-```
 
 ---
 
@@ -183,6 +104,84 @@ Waveforms clearly show:
 iverilog -o trafficv2.out trafficv2.v tb_trafficv2.v
 vvp trafficv2.out
 gtkwave trafficv2.vcd
+```
+
+---
+# Urban Traffic Light Controller
+
+---
+
+## Description
+
+The **Urban Traffic Light Controller** models a smart city intersection with adaptive behavior.  
+It extends a basic traffic FSM by incorporating **pedestrian safety, emergency vehicle priority, adaptive green timing, parking slot management, and early-morning flashing modes**.
+
+---
+
+## Key Features
+
+- **Vehicle Traffic Handling**
+  - Standard GREEN → YELLOW → RED sequencing
+  - Vehicle presence detection
+
+- **Pedestrian Crossing Phase**
+  - Dedicated pedestrian FSM state
+  - All vehicle traffic halted during crossing
+
+- **Emergency Vehicle Override**
+  - Immediate signal preemption
+  - Forces GREEN signal for emergency clearance
+
+- **Adaptive Green Timing**
+  - Shorter green duration during low traffic
+  - Normal duration during peak traffic
+
+- **Early-Morning Flashing Yellow Mode**
+  - Blinking yellow operation during low-traffic hours
+  - Models real-world early-morning signal behavior
+
+- **Parking Slot Management**
+  - Tracks available parking slots
+  - Updates slot count on vehicle entry/exit
+
+---
+
+## FSM States
+
+- `IDLE`
+- `GREEN`
+- `YELLOW`
+- `RED`
+- `PEDESTRIAN`
+- `EMERGENCY`
+- `YELLOW_BLINK`
+
+---
+
+## Simulation & Verification
+
+The design is verified using:
+
+- **Icarus Verilog** for compilation and simulation  
+- **GTKWave** for waveform visualization  
+
+Waveforms clearly show:
+
+- Clock-driven state transitions  
+- Proper traffic light sequencing  
+- Pedestrian and emergency overrides  
+- Adaptive timing behavior  
+
+<img width="1920" height="1080" alt="urban traffic waveform" src="https://github.com/user-attachments/assets/1b5276d1-870e-49ee-b5e5-3f6f59f4878b" />
+
+---
+
+## How to Run (Urban Controller)
+
+```sh
+iverilog -o trafficv4.out trafficv4.v tb_trafficv4.v
+vvp trafficv4.out
+gtkwave trafficv4.vcd
 ```
 
 ---
