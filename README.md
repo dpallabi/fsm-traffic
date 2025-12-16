@@ -88,14 +88,6 @@ The design is verified using:
 - **Icarus Verilog** for compilation and simulation  
 - **GTKWave** for waveform visualization  
 
-Waveforms clearly show:
-
-- Clock-driven state transitions  
-- Proper light switching behavior  
-- Correct day/night mode selection  
-
-<img width="1920" height="1080" alt="highway traffic waveform" src="https://github.com/user-attachments/assets/a8f1ae7c-6b9f-4544-a92c-c816093f4425" />
-
 ---
 
 ## How to Run (Highway Controller)
@@ -160,15 +152,6 @@ The design is verified using:
 
 - **Icarus Verilog** for compilation and simulation  
 - **GTKWave** for waveform visualization  
-
-Waveforms clearly show:
-
-- Clock-driven state transitions  
-- Proper traffic light sequencing  
-- Pedestrian and emergency overrides  
-- Adaptive timing behavior  
-
-<img width="1920" height="1080" alt="urban traffic waveform" src="https://github.com/user-attachments/assets/1b5276d1-870e-49ee-b5e5-3f6f59f4878b" />
 
 ---
 
