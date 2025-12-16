@@ -1,186 +1,204 @@
-🚦 FSM-Based Traffic Light Controllers using Verilog HDL
-Urban Intersection & Highway–Country Road Scenarios
-📌 Overview
+# 🚦 FSM-Based Traffic Light Controllers using Verilog HDL
 
-This repository presents a comprehensive FSM-based traffic light control system implemented in Verilog HDL, covering two real-world traffic scenarios:
+---
 
-Urban Intersection Traffic Controller
+## 📌 Overview
 
-Highway–Country Road Traffic Controller
+This repository contains **two Finite State Machine (FSM)–based traffic light controller designs** implemented in **Verilog HDL**, targeting real-world traffic scenarios:
 
-The designs model realistic traffic behavior by incorporating pedestrian safety, emergency vehicle priority, adaptive signal timing, time-dependent operation, and parking slot management.
-All modules are fully synthesizable and verified using Icarus Verilog and GTKWave.
+- **Urban Intersection Traffic Light Controller**
+- **Highway–Country Road Traffic Light Controller**
 
-This repository demonstrates progressive system design, starting from structured FSM-based traffic control and extending to intelligent transportation system (ITS) concepts.
+Both designs are **fully synthesizable**, clock-driven, and verified using **Icarus Verilog** and **GTKWave**.  
+The projects emphasize **practical traffic behavior modeling**, safety, and adaptability, making them suitable for **Intelligent Transportation Systems (ITS)** and digital design coursework.
 
-🧩 Project Structure
-├── urban_traffic/
-│   ├── trafficv4.v          # Urban FSM-based traffic controller
-│   ├── tb_trafficv4.v       # Testbench
-│   └── urban_waveform.png
-│
-├── highway_traffic/
-│   ├── trafficv2.v          # Highway–Country FSM controller
-│   ├── tb_trafficv2.v       # Testbench
-│   └── highway_waveform.png
-│
-└── README.md
+---
 
-🏙️ Module 1: Urban Traffic Light Controller
-🔹 Description
+## Tools & Technologies
 
-An adaptive smart urban traffic controller implemented as a Moore FSM, designed to model real-world city intersections.
-The controller dynamically responds to traffic conditions, pedestrian demands, emergency vehicles, and time-of-day variations.
+- **Hardware Description Language:** Verilog HDL  
+- **Simulation:** Icarus Verilog (`iverilog`, `vvp`)  
+- **Waveform Visualization:** GTKWave  
+- **Design Methodology:** FSM-based synchronous design  
 
-✨ Key Features
+---
 
-Vehicle Traffic Handling
+# Urban Traffic Light Controller
 
-Standard GREEN → YELLOW → RED sequencing
+---
 
-Vehicle presence detection via sensors
+## Description
 
-Pedestrian Crossing Phase
+The **Urban Traffic Light Controller** models a smart city intersection with adaptive behavior.  
+It extends a basic traffic FSM by incorporating **pedestrian safety, emergency vehicle priority, adaptive green timing, parking slot management, and early-morning flashing modes**.
 
-Dedicated pedestrian state
+---
 
-Ensures complete traffic halt during crossing
+## Key Features
 
-Emergency Vehicle Override
+- **Vehicle Traffic Handling**
+  - Standard GREEN → YELLOW → RED sequencing
+  - Vehicle presence detection
 
-Immediate signal preemption
+- **Pedestrian Crossing Phase**
+  - Dedicated pedestrian FSM state
+  - All vehicle traffic halted during crossing
 
-Forces GREEN signal for emergency clearance
+- **Emergency Vehicle Override**
+  - Immediate signal preemption
+  - Forces GREEN signal for emergency clearance
 
-Adaptive Green Timing
+- **Adaptive Green Timing**
+  - Shorter green duration during low traffic
+  - Normal duration during peak traffic
 
-Adjusts green duration based on traffic density
+- **Early-Morning Flashing Yellow Mode**
+  - Blinking yellow operation during low-traffic hours
+  - Models real-world early-morning signal behavior
 
-Supports low-traffic and normal-traffic modes
+- **Parking Slot Management**
+  - Tracks available parking slots
+  - Updates slot count on vehicle entry/exit
 
-Early-Morning Flashing Yellow Mode
+---
 
-Blinking yellow operation during low traffic hours
+## FSM States
 
-Models real-world early-morning intersections
+- `IDLE`
+- `GREEN`
+- `YELLOW`
+- `RED`
+- `PEDESTRIAN`
+- `EMERGENCY`
+- `YELLOW_BLINK`
 
-Parking Slot Management
+---
 
-Independent counter-based subsystem
+## Simulation & Verification
 
-Tracks vehicle entry and exit in parking areas
+The design is verified using:
 
-🔁 FSM States (Urban)
-State	Description
-IDLE	Default waiting state
-GREEN	Vehicle green signal
-YELLOW	Vehicle yellow signal
-RED	Vehicle red signal
-PEDESTRIAN	Pedestrian crossing phase
-EMERGENCY	Emergency override
-YELLOW_BLINK	Flashing yellow mode
-🧪 Simulation & Verification
+- **Icarus Verilog** for compilation and simulation  
+- **GTKWave** for waveform visualization  
 
-Verified through a comprehensive testbench covering:
+Waveforms clearly show:
 
-Normal traffic flow
+- Clock-driven state transitions  
+- Proper traffic light sequencing  
+- Pedestrian and emergency overrides  
+- Adaptive timing behavior  
 
-Pedestrian requests
+<img width="1920" height="1080" alt="urban traffic waveform" src="https://github.com/user-attachments/assets/1b5276d1-870e-49ee-b5e5-3f6f59f4878b" />
 
-Emergency events
+---
 
-Adaptive timing transitions
+## How to Run (Urban Controller)
 
-Parking slot updates
+```sh
+iverilog -o trafficv4.out trafficv4.v tb_trafficv4.v
+vvp trafficv4.out
+gtkwave trafficv4.vcd
+```
 
-Waveform inspection confirms correct FSM transitions and signal behavior.
+---
 
-🛣️ Module 2: Highway–Country Road Traffic Controller
-🔹 Description
+# Highway–Country Road Traffic Light Controller
 
-A FSM-based traffic controller designed for a highway–country road intersection, prioritizing highway traffic while safely handling low-volume country road vehicles.
-The system supports time-dependent operation, distinguishing between day mode and night mode.
+---
 
-✨ Key Features
+## Description
 
-FSM-based synchronous traffic control
+This controller manages a **highway–country road intersection**, prioritizing highway traffic while safely handling transitions.  
+It supports **time-based operation**, switching behavior between **day mode** and **night mode**.
 
-Separate signal handling for highway and country road
+---
 
-Day and Night operating modes
+## Operating Modes
 
-Sensor-driven and event-driven transitions
+### Day Mode (05:00 – 09:00)
 
-Modular and extensible design
+- Controlled using vehicle sensor input
+- Highway remains GREEN unless country-road traffic is detected
+- Full transition sequence executed when required
 
-🕒 Operating Modes
-🔆 Day Mode (05:00 – 09:00)
+### Night Mode (Outside 05:00 – 09:00)
 
-Controlled using vehicle sensor input (X)
+- Controlled using a character detector
+- Traffic switches only on valid external input
+- Reduces unnecessary signal changes during low traffic
 
-Highway remains GREEN if no country-road traffic
+---
 
-Full transition sequence executed when vehicle detected
+## FSM States
 
-🌙 Night Mode (Outside 05:00 – 09:00)
+- `s0` – Highway Green, Country Red  
+- `s1` – Highway Green (delay)  
+- `s2` – Highway Yellow  
+- `s3` – Country Green, Highway Red  
+- `s4` – Country Yellow  
 
-Controlled using a character detector
+---
 
-Traffic switches based on valid character input
+## Traffic Light Encoding
 
-Demonstrates event-driven FSM behavior
+- `11` → Green  
+- `01` → Yellow  
+- `00` → Red  
 
-🔁 FSM States (Highway)
-State	Description
-s0	Highway Green, Country Red
-s1	Highway Green (delay)
-s2	Highway Yellow
-s3	Country Green
-s4	Country Yellow
-s5	Reserved
-🚥 Traffic Light Encoding
-Value	Meaning
-11	Green
-01	Yellow
-00	Red
-🛠 Tools & Technologies
+---
 
-Hardware Description Language: Verilog HDL
+## Important Signals
 
-Design Methodology: FSM-based synchronous design
+- `clock` – System clock  
+- `clear` – FSM reset  
+- `X` – Vehicle sensor (day mode)  
+- `char[7:0]` – Character input (night mode)  
+- `state[2:0]` – Current FSM state  
+- `next_state[2:0]` – Next FSM state  
+- `hwy[1:0]` – Highway traffic light  
+- `country[1:0]` – Country road traffic light  
 
-Simulation: Icarus Verilog (iverilog, vvp)
+---
 
-Waveform Analysis: GTKWave
+## Simulation & Verification
 
-▶️ How to Run (Example)
-Compile
-iverilog -o traffic.out traffic.v tb_traffic.v
+The design is verified using:
 
-Run Simulation
-vvp traffic.out
+- **Icarus Verilog** for compilation and simulation  
+- **GTKWave** for waveform visualization  
 
-View Waveforms
-gtkwave traffic.vcd
+Waveforms clearly show:
 
-📌 Key Learning Outcomes
+- Clock-driven state transitions  
+- Proper light switching behavior  
+- Correct day/night mode selection  
 
-Practical FSM design for real-world traffic systems
+<img width="1920" height="1080" alt="highway traffic waveform" src="https://github.com/user-attachments/assets/a8f1ae7c-6b9f-4544-a92c-c816093f4425" />
 
-Handling asynchronous events in synchronous designs
+---
 
-Adaptive timing and multi-mode control logic
+## How to Run (Highway Controller)
 
-Integration-ready design for intelligent transportation systems
+```sh
+iverilog -o trafficv2.out trafficv2.v tb_trafficv2.v
+vvp trafficv2.out
+gtkwave trafficv2.vcd
+```
 
-Strong foundation for smart city, VLSI, and embedded systems applications
+---
 
-🚀 Future Extensions
+## Learning Outcomes
 
-Integration with AI-based traffic decision layers
+- FSM-based digital system design
+- Traffic control logic modeling
+- Synchronous timing and state transitions
+- Testbench-driven verification
+- Real-world ITS behavior representation
 
-Sensor fusion using real-time data
+---
 
-Multi-intersection coordination
+## License
 
-Hardware deployment on FPGA platforms
+This project is intended for **academic, learning, and demonstration purposes**.
+
+
